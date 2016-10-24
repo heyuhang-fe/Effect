@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>bilibili按钮</title>
+		<style>
+			.icon{
+				width: 80px;
+				height: 80px;
+			    background-image: url(anim-app.png);
+			    display: block;
+			}
+			.icon:hover{
+				 /*background-position: -2800px 0;*/
+				-webkit-animation: animate 1s steps(15,start);
+			            animation: animate 1s steps(15,start);
+			            /*animation-iteration-count:infinite;*/
+						animation-fill-mode : forwards;
+			}
+			@keyframes animate {
+			    from {
+			        background-position: 0 0;
+			    }
+			    to {
+			        background-position: -1200px 0;
+			    }
+			}
+
+			* {
+				padding:0px;
+				margin:0px;
+			}
+			body {
+				font-size:12px;
+				line-height:100%;
+				font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+			}
+			h1,h2,h3,h4,h5,h6 {
+				font-weight:normal;
+				line-height:100%;
+				font-size:100%;
+			}
+			ul,ol {
+				list-style:none;
+			}
+			a{
+				text-decoration:none;
+				color:#000;
+				line-height:100%;
+			}
+			img,a img {
+				border:none;
+				vertical-align:top;
+			}
+			b,strong {
+				font-weight:normal;
+			}
+			i,em {
+				font-style:normal;
+			}
+			.clearfix:after {
+				display:block;
+				content:'';
+				clear:both;
+			}
+			.clearfix {
+				zoom:1;
+			}
+
+
+			li i{
+				display:block;
+				width:80px;
+				height:80px;
+				background-position:0px 0px;
+				float: left;
+			}
+			.icon-share{
+				background:url(anim-share.png);
+			}
+			.icon-fav{
+				background:url(anim-fav.png);
+				margin-top: 6px;
+			}
+			.icon-app{
+				background:url(anim-app.png);
+			}
+			.icon-coin{
+				background:url(anim-coin.png);
+				margin-top: -13px;
+			}
+						
+			li div{
+				float: left;
+				margin-right: 50px;
+			}
+			li div p:nth-child(1){
+				color: #000;
+				font-size: 18px;
+				height: 50px;
+				line-height: 68px;
+			}
+			li div p:nth-child(2){
+				color: #6d757a;
+				font-size: 12px;
+				height: 12px;			
+			}
+			body{
+				padding-left: 50px;
+			}
+		</style>
+
+	</head>
+	<body>
+		<p style="font-size:20px;margin:60px auto 100px auto; text-align:center;">这个效果是【bilibili网站】视频下面的按钮</p>
+
+		<p style="font-size:20px;margin:20px 0;">animate做的动画</p>
+		<i class="icon"></i>
+
+
+		<p style="font-size:20px;margin:20px 0;">js写的动画</p>
+		<ul class="clearfix">
+			<li>				
+				<i class="icon-share"></i>
+				<div>
+					<p>分享</p>
+					<p>8950</p>
+				</div>
+			</li>
+
+			<li>				
+				<i class="icon-fav"></i>
+				<div>
+					<p>收藏</p>
+					<p>168015</p>
+				</div>
+			</li>
+
+			<li>				
+				<i class="icon-app"></i>
+				<div>
+					<p>用手机看</p>
+					<p>离线看更方便</p>
+				</div>
+			</li>
+
+			<li>				
+				<i class="icon-coin"></i>
+				<div>
+					<p>硬币</p>
+					<p>10847</p>
+				</div>
+			</li>
+
+		</ul>
+		
+		
+		
+		
+
+
+		<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" ></script>
+		<script>
+			$(document).ready(function(){
+				var $iconApp = $('.icon-app');
+				var $iconCoin = $('.icon-coin');
+				var $iconFav = $('.icon-fav');
+				var $iconShare = $('.icon-share');
+				var arr=[$iconApp,$iconCoin,$iconFav,$iconShare];
+
+				var n_share=0;
+				var n_fav=0;
+				var n_app=0;
+				var n_coin=0;
+				var timer_share=null;
+				var timer_fav=null;
+				var timer_app=null;
+				var timer_coin=null;
+
+				// 分享图标
+				$iconShare.on('mouseover',function(e){
+					var _this=$(this);
+					clearInterval(timer_share);
+					timer_share=setInterval(function(){
+						n_share -= 80;
+						console.log(n_share);
+						if(n_share <= -1280){
+							clearInterval(timer_share);
+						}
+						_this.css({backgroundPosition:n_share+"px 0"})
+					},110)				
+				})
+				$iconShare.on('mouseout',function(e){
+					clearInterval(timer_share);
+					var _this = $(this);
+					timer_share=setInterval(function(){
+						n_share += 80;
+						console.log(n_share);
+						if(n_share >= 0){
+							n_share = 0;
+							clearInterval(timer_share);
+						}
+						_this.css({backgroundPosition:n_share+"px 0"})
+					},110)	
+				})
+
+				// 星星图标
+				$iconFav.on('mouseover',function(e){
+					var _this=$(this);
+					clearInterval(timer_fav);
+					timer_fav=setInterval(function(){
+						n_fav -= 80;
+						console.log(n_fav);
+						if(n_fav <= -1040){
+							n_fav = 0;
+						}
+						_this.css({backgroundPosition:n_fav+"px 0"})
+					},110)				
+				})
+				$iconFav.on('mouseout',function(e){
+					clearInterval(timer_fav);
+					var _this = $(this);
+					timer_fav=setInterval(function(){
+						n_fav += 80;
+						console.log(n_fav);
+						if(n_fav >= 0){
+							n_fav = 0;
+							clearInterval(timer_fav);
+						}
+						_this.css({backgroundPosition:n_fav+"px 0"})
+					},110)	
+				})
+
+
+				// 小手机图标
+				$iconApp.on('mouseover',function(e){
+					var _this=$(this);
+					clearInterval(timer_app);
+					timer_app=setInterval(function(){
+						n_app -= 80;
+						console.log(n_app);
+						if(n_app <= -1200){
+							n_app = -720;
+						}
+						_this.css({backgroundPosition:n_app+"px 0"})
+					},110)	
+				})
+				$iconApp.on('mouseout',function(e){
+					clearInterval(timer_app);
+					var _this = $(this);
+					timer_app=setInterval(function(){
+						n_app += 80;
+						console.log(n_app);
+						if(n_app >= 0){
+							n_app = 0;
+							clearInterval(timer_app);
+						}
+						_this.css({backgroundPosition:n_app+"px 0"})
+					},110)	
+				})
+
+
+				// 金币图标
+				$iconCoin.on('mouseover',function(e){
+					var _this=$(this);
+					clearInterval(timer_coin);
+					timer_coin=setInterval(function(){
+						n_coin -= 80;
+						console.log(n_coin);
+						if(n_coin <= -560){
+							n_coin = 0;
+						}
+						_this.css({backgroundPosition:n_coin+"px 0"})
+					},110)			
+				})
+				$iconCoin.on('mouseout',function(e){
+					clearInterval(timer_coin);
+					var _this = $(this);
+					timer_coin=setInterval(function(){
+						n_coin += 80;
+						console.log(n_coin);
+						if(n_coin >= 0){
+							n_coin = 0;
+							clearInterval(timer_coin);
+						}
+						_this.css({backgroundPosition:n_coin+"px 0"})
+					},110)	
+				})
+
+				
+
+				
+
+		});	
+		</script>
+	</body>
+</html>
